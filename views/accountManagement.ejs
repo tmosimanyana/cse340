@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<main>
+  <% if (user) { %>
+    <h2>Welcome <%= user.first_name %></h2>
+    <% if (user.account_type !== 'Client') { %>
+      <h3>Inventory Management</h3>
+      <p><a href="/inventory">Manage Inventory</a></p>
+    <% } %>
+    <!-- Account update link -->
+    <p><a href="/account/update">Update Account Information</a></p>
+  <% } else { %>
+    <p>You are not logged in. <a href="/account/login">Log in</a></p>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>
