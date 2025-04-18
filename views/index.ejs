@@ -1,27 +1,67 @@
-<h1>Welcome to CSE Motors!</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to CSE Motors</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>CSE Motors</h1>
+    </header>
 
-<div class="hero">
-  <img src="/images/vehicles.jpg" alt="Row of vehicles">
-</div>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/inventory">Inventory</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
 
-<section class="upgrades">
-  <h2>Vehicle Upgrades</h2>
-  <div class="upgrade-grid">
-    <div class="upgrade">
-      <img src="/images/upgrade1.jpg" alt="Upgrade 1">
-      <p>Feature 1</p>
-    </div>
-    <!-- repeat for other upgrades -->
-  </div>
-</section>
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <img src="/images/hero.jpg" alt="Featured vehicle parked in a scenic location" />
+      </section>
 
-<section class="reviews">
-  <h2>Customer Reviews</h2>
-  <ul>
-    <li>“CSE Motors is great!” - A Satisfied Customer</li>
-    <li>“Reliable vehicles and friendly staff.”</li>
-    <!-- add more reviews -->
-  </ul>
-</section>
-<footer>
-  <p>&copy; 2023 CSE Motors. All rights reserved.</p>
+      <!-- Upgrades Section -->
+      <section class="upgrades">
+        <h2>Vehicle Upgrades</h2>
+        <div class="upgrade-grid">
+          <div class="upgrade">
+            <img src="/images/upgrade1.jpg" alt="All-weather floor mats" />
+            <p>Floor Mats</p>
+          </div>
+          <div class="upgrade">
+            <img src="/images/upgrade2.jpg" alt="Performance exhaust system" />
+            <p>Performance Exhaust</p>
+          </div>
+          <div class="upgrade">
+            <img src="/images/upgrade3.jpg" alt="LED headlights" />
+            <p>LED Headlights</p>
+          </div>
+          <div class="upgrade">
+            <img src="/images/upgrade4.jpg" alt="Roof racks" />
+            <p>Roof Rack</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews Section -->
+      <section class="reviews">
+        <h2>Customer Reviews</h2>
+        <ul>
+          <li>"CSE Motors helped me find the perfect car!"</li>
+          <li>"Amazing customer service and a great selection."</li>
+          <li>"Upgrades were installed professionally. Highly recommend!"</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> CSE Motors. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
