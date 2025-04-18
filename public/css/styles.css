@@ -24,6 +24,8 @@ footer {
 
 header h1 {
   margin: 0;
+  font-size: 2rem;
+  color: white;
 }
 
 /* Navigation Styles */
@@ -48,6 +50,7 @@ nav li a {
 nav li a:hover,
 nav li a:focus {
   background-color: #004080; /* Slightly lighter blue */
+  outline: 3px solid #00b3b3; /* Clear focus indicator */
 }
 
 /* ******************************************
@@ -62,10 +65,10 @@ main {
 /* ******************************************
  * Headings
  *******************************************/
-h1,
-h2 {
+h1, h2 {
   color: #002244;
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 /* ******************************************
@@ -112,6 +115,10 @@ h2 {
   list-style: none;
   padding: 0;
   font-style: italic;
+}
+
+.reviews li {
+  margin-bottom: 1rem;
 }
 
 /* ******************************************
@@ -173,40 +180,92 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+button:hover,
+button:focus {
   background-color: #002244;
+  outline: 2px solid #00b3b3; /* Focus indication */
 }
-<style>
-  #top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-  }
 
-  .siteName a {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-  }
+/* ******************************************
+ * Header and Tools - Additional Styling
+ *******************************************/
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+}
 
-  .siteName a:hover {
-    text-decoration: underline;
-  }
+.siteName a {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
 
-  #tools a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 1rem;
-  }
+.siteName a:hover {
+  text-decoration: underline;
+}
 
-  #tools a:hover {
-    text-decoration: underline;
-  }
-  #tools a.active {
-    font-weight: bold;
-  }
+#tools a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 1rem;
+}
+
+#tools a:hover {
+  text-decoration: underline;
+}
+
+#tools a.active {
+  font-weight: bold;
+}
+
+/* ******************************************
+ * Form and Input Styling (Accessibility) 
+ *******************************************/
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #004080;
+  outline: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* ******************************************
+ * Accessibility Styles (Focus and Hover States)
+ *******************************************/
+a, button {
+  text-decoration: none;
+  outline: none;
+}
+
+a:focus, button:focus {
+  outline: 3px solid #00b3b3; /* Focus outline for accessibility */
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
