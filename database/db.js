@@ -4,8 +4,10 @@ require('dotenv').config();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: false, // Necessary for Render deployment
   },
 });
 
-module.exports = pool;
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+};
