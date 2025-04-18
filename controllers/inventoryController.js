@@ -1,32 +1,35 @@
-const inventoryModel = require('../models/inventoryModel')
-const utilities = require('../utilities')
+const inventoryModel = require('../models/inventoryModel');
+const utilities = require('../utilities');
 
+// Home Page
 exports.getHomePage = async (req, res, next) => {
   try {
-    const vehicles = await inventoryModel.getAllVehicles()
-    res.render('index', { title: 'Home', vehicles })
+    const vehicles = await inventoryModel.getAllVehicles();
+    res.render('index', { title: 'Home', vehicles });
   } catch (error) {
-    next(error)
+    next(error); // Pass the error to the global error handler
   }
-}
+};
 
+// Vehicle Detail Page
 exports.getVehicleDetail = async (req, res, next) => {
   try {
-    const vehicleId = parseInt(req.params.id, 10)
-    const vehicle = await inventoryModel.getVehicleById(vehicleId)
+    const vehicleId = parseInt(req.params.id, 10);
+    const vehicle = await inventoryModel.getVehicleById(vehicleId);
+
     if (vehicle) {
-      const formattedPrice = utilities.formatPrice(vehicle.price)
-      const formattedMileage = utilities.formatMileage(vehicle.mileage)
+      const formattedPrice = utilities.formatPrice(vehicle.price);
+      const formattedMileage = utilities.formatMileage(vehicle.mileage);
       res.render('vehicleDetail', {
         title: `${vehicle.make} ${vehicle.model}`,
         vehicle,
         formattedPrice,
-        formattedMileage
-      })
+        formattedMileage,
+      });
     } else {
-      res.status(404).render('404', { title: 'Vehicle Not Found' })
+      res.status(404).render('404', { title: 'Vehicle Not Found' });
     }
   } catch (error) {
-    next(error)
+    next(error); // Pass the error to the global error handler
   }
-}
+};
