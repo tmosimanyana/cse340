@@ -1,24 +1,42 @@
 const inventoryModel = require('../models/inventoryModel');
 const utilities = require('../utilities');
 
-exports.getHomePage = (req, res) => {
-  const vehicles = inventoryModel.getAllVehicles();
-  res.render('index', { title: 'Home', vehicles });
+// Home Page
+exports.getHomePage = async (req, res, next) => {
+  try {
+    const vehicles = await inventoryModel.getAllVehicles(); // assuming async
+    const nav = await utilities.getNav();
+    res.render('index', {
+      title: 'Home',
+      nav,
+      vehicles
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
-exports.getVehicleDetail = (req, res) => {
-  const vehicleId = parseInt(req.params.id, 10);
-  const vehicle = inventoryModel.getVehicleById(vehicleId);
-  if (vehicle) {
-    const formattedPrice = utilities.formatPrice(vehicle.price);
-    const formattedMileage = utilities.formatMileage(vehicle.mileage);
-    res.render('vehicleDetail', {
-      title: `${vehicle.make} ${vehicle.model}`,
-      vehicle,
-      formattedPrice,
-      formattedMileage,
-    });
-  } else {
-    res.status(404).render('404', { title: 'Vehicle Not Found' });
+// Vehicle Detail Page
+exports.getVehicleDetail = async (req, res, next) => {
+  try {
+    const vehicleId = parseInt(req.params.id, 10);
+    const vehicle = await inventoryModel.getVehicleById(vehicleId); // async
+    const nav = await utilities.getNav();
+
+    if (vehicle) {
+      const formattedPrice = utilities.formatPrice(vehicle.price);
+      const formattedMileage = utilities.formatMileage(vehicle.mileage);
+      res.render('vehicleDetail', {
+        title: `${vehicle.make} ${vehicle.model}`,
+        nav,
+        vehicle,
+        formattedPrice,
+        formattedMileage
+      });
+    } else {
+      res.status(404).render('404', { title: 'Vehicle Not Found', nav });
+    }
+  } catch (err) {
+    next(err);
   }
 };
