@@ -1,52 +1,26 @@
-/* ******************************************
- * This server.js file is the primary file of the 
- * application. It is used to control the project.
- *******************************************/
+const express = require("express");
+const dotenv = require("dotenv").config();
+const app = express();
+const inventoryRoutes = require("./routes/inventoryRoutes");
+const expressLayouts = require("express-ejs-layouts");
+const errorHandler = require('./middleware/errorHandler');
 
-/* ***********************
- * Require Statements
- *************************/
-const express = require("express")
-const env = require("dotenv").config()
-const app = express()
-const static = require("./routes/static")
-const inventoryRoutes = require("./routes/inventoryRoutes") // ✅ Import inventory routes
-const expressLayouts = require("express-ejs-layouts")
-const errorHandler = require('./middleware/errorHandler') // Import error handler middleware
+// Middleware setup
+app.use(express.urlencoded({ extended: true })); // For form data handling
+app.use(express.json()); // For handling JSON data
+app.use(expressLayouts);
+app.set("view engine", "ejs");
+app.set("layout", "./layouts/layout");
 
-/* ***********************
- * View Engine and Templates
- *************************/
-app.set("view engine", "ejs")
-app.use(expressLayouts)
-app.set("layout", "./layouts/layout")
+// Routes
+app.use("/", inventoryRoutes);
 
-/* ***********************
- * Static Routes
- *************************/
-app.use(static)
+// Error handling middleware
+app.use(errorHandler);
 
-/* ***********************
- * Inventory Routes
- *************************/
-app.use("/", inventoryRoutes) // ✅ Mount inventory routes
-
-/* ***********************
- * Local Server Information
- * Values from .env (environment) file
- *************************/
-const port = process.env.PORT
-const host = process.env.HOST
-
-/* ***********************
- * Error middleware
- *************************/
-// Error handler middleware should be placed after routes
-app.use(errorHandler) // Error handler middleware placed before app.listen()
-
-/* ***********************
- * Log statement to confirm server operation
- *************************/
+// Start server
+const port = process.env.PORT || 5500;
+const host = process.env.HOST || "localhost";
 app.listen(port, () => {
-  console.log(`App listening on ${host}:${port}`)
-})
+  console.log(`App listening on ${host}:${port}`);
+});

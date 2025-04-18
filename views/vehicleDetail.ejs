@@ -1,14 +1,15 @@
-<main>
-    <h1><%= vehicle.make %> <%= vehicle.model %></h1>
-    <div class="vehicle-detail">
-      <img src="<%= vehicle.image %>" alt="Image of <%= vehicle.make %> <%= vehicle.model %>">
-      <ul>
-        <li><strong>Price:</strong> <%= formattedPrice %></li>
-        <li><strong>Mileage:</strong> <%= formattedMileage %></li>
-        <li><strong>Color:</strong> <%= vehicle.color %></li>
-        <li><strong>Year:</strong> <%= vehicle.year %></li>
-        <li><strong>Description:</strong> <%= vehicle.description %></li>
-      </ul>
-    </div>
-  </main>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= vehicle.make %> <%= vehicle.model %></h1>
+  <p>Year: <%= vehicle.year %></p>
+  <p>Price: <%= formattedPrice %></p>
+  <p>Mileage: <%= formattedMileage %></p>
+  <p>Details: <%= vehicle.details %></p>
+</body>
+</html>

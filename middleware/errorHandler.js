@@ -1,7 +1,4 @@
-function handleErrors(err, req, res, next) {
-    console.error(err.stack)
-    res.status(500).render('500', { title: 'Server Error', error: err.message })
-  }
-  
-  module.exports = handleErrors
-  
+module.exports = (err, req, res, next) => {
+  console.error(err.stack);  // Logs error stack trace for debugging
+  res.status(500).send('Something went wrong!');
+};

@@ -9,11 +9,6 @@ router.get('/', inventoryController.getHomePage);
 router.get('/vehicle/:id', inventoryController.getVehicleDetail);
 
 // Management View
-router.get('/inv', inventoryController.getManagementView);
-
-// Error Testing Route (for testing error handling)
-router.get('/cause-error', (req, res, next) => {
-    next(new Error("This is a test error"));
-});
+router.get('/management', inventoryController.getManagementView);
 
 module.exports = router;

@@ -1,4 +1,3 @@
-// db/index.js
 const pgp = require('pg-promise')();
 require('dotenv').config(); // Loads .env variables
 

@@ -36,7 +36,7 @@ exports.getVehicleDetail = async (req, res, next) => {
 
 // Management View
 exports.getManagementView = (req, res) => {
-  const flashMessage = req.flash('message'); // Get any flash message
+  const flashMessage = req.flash('message');
   res.render('inventory/management', {
     title: 'Inventory Management',
     flashMessage: flashMessage.length > 0 ? flashMessage[0] : null
