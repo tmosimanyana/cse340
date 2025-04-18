@@ -1,35 +1,24 @@
-const reviewsModel = require('../models/reviewsModel');
+const reviewModel = require("../models/reviewsModel")
 
-// Show reviews for a vehicle
-const showReviews = async (req, res, next) => {
+async function getVehicleReviews(req, res, next) {
+  const { vehicleId } = req.params
   try {
-    const vehicleId = req.params.vehicleId;
-    const reviews = await reviewsModel.getReviewsByVehicleId(vehicleId);
-    res.render('reviews', { reviews, vehicleId });
-  } catch (err) {
-    next(err);
+    const reviews = await reviewModel.getReviewsByVehicleId(vehicleId)
+    res.locals.reviews = reviews
+    next() // move to next middleware like rendering the vehicle detail page
+  } catch (error) {
+    next(error)
   }
-};
+}
 
-// Add a new review
-const addReview = async (req, res, next) => {
-  const { vehicleId } = req.params;
-  const { reviewerName, rating, reviewText } = req.body;
-
-  // Validate input
-  if (!reviewerName || !rating || rating < 1 || rating > 5) {
-    return res.status(400).render('reviews', {
-      error: 'Invalid input data. Please check the form fields.',
-      vehicleId,
-    });
-  }
-
+async function postNewReview(req, res, next) {
+  const { vehicleId, reviewerName, rating, reviewText } = req.body
   try {
-    const newReview = await reviewsModel.addReview(vehicleId, reviewerName, rating, reviewText);
-    res.redirect(`/reviews/${vehicleId}`);  // Redirect to the vehicle's reviews page
-  } catch (err) {
-    next(err);
+    await reviewModel.addReview(vehicleId, reviewerName, rating, reviewText)
+    res.redirect(`/inventory/detail/${vehicleId}`) // redirect back to vehicle page
+  } catch (error) {
+    next(error)
   }
-};
+}
 
-module.exports = { showReviews, addReview };
+module.exports = { getVehicleReviews, postNewReview }

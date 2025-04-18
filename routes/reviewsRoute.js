@@ -1,11 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const reviewsController = require('../controllers/reviewsController');
+const express = require("express")
+const router = express.Router()
+const reviewController = require("../controllers/reviewsController")
 
-// Display reviews for a specific vehicle
-router.get('/:vehicleId', reviewsController.showReviews);
+// POST route for submitting a review
+router.post("/add", reviewController.postNewReview)
 
-// Add a new review for a specific vehicle
-router.post('/:vehicleId', reviewsController.addReview);
-
-module.exports = router;
+module.exports = router
