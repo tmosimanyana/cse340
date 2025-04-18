@@ -65,3 +65,121 @@
     </footer>
   </body>
 </html>
+/* Typography and Base Layout */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9fafb; /* light gray for high contrast */
+  color: #111; /* almost black for great readability */
+  line-height: 1.6;
+}
+
+/* Layout Components */
+header, nav, footer {
+  background-color: #002244; /* dark blue */
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  padding: 1rem;
+  max-width: 960px;
+  margin: auto;
+}
+
+/* Navigation Styling */
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+nav li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+nav li a:hover,
+nav li a:focus {
+  background-color: #004080; /* slightly lighter blue */
+  border-radius: 5px;
+}
+
+/* Headings */
+h1, h2 {
+  color: #002244;
+  margin-bottom: 1rem;
+}
+
+/* Hero Section */
+.hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Upgrades Section */
+.upgrades, .reviews {
+  margin-top: 2rem;
+}
+
+.upgrade-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.upgrade {
+  text-align: center;
+}
+
+.upgrade img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Reviews Section */
+.reviews ul {
+  list-style: none;
+  padding: 0;
+  font-style: italic;
+}
+
+/* Footer */
+footer {
+  margin-top: 2rem;
+}
+
+footer p {
+  font-size: 0.9rem;
+}
+
+/* Media Queries for Larger Screens */
+@media screen and (min-width: 768px) {
+  .upgrade-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .upgrade {
+    flex: 0 1 200px;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
