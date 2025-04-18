@@ -12,6 +12,7 @@ const app = express()
 const static = require("./routes/static")
 const inventoryRoutes = require("./routes/inventoryRoutes") // ✅ Import inventory routes
 const expressLayouts = require("express-ejs-layouts")
+const errorHandler = require('./middleware/errorHandler') // Import error handler middleware
 
 /* ***********************
  * View Engine and Templates
@@ -38,12 +39,14 @@ const port = process.env.PORT
 const host = process.env.HOST
 
 /* ***********************
+ * Error middleware
+ *************************/
+// Error handler middleware should be placed after routes
+app.use(errorHandler) // Error handler middleware placed before app.listen()
+
+/* ***********************
  * Log statement to confirm server operation
  *************************/
 app.listen(port, () => {
   console.log(`App listening on ${host}:${port}`)
 })
-const errorHandler = require('./middleware/errorHandler')
-
-// Error middleware (footer-based link can trigger an error to test this)
-app.use(errorHandler)

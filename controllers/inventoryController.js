@@ -33,3 +33,12 @@ exports.getVehicleDetail = async (req, res, next) => {
     next(error); // Pass the error to the global error handler
   }
 };
+
+// Management View
+exports.getManagementView = (req, res) => {
+  const flashMessage = req.flash('message'); // Get any flash message
+  res.render('inventory/management', {
+    title: 'Inventory Management',
+    flashMessage: flashMessage.length > 0 ? flashMessage[0] : null
+  });
+};

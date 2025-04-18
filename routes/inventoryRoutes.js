@@ -1,4 +1,3 @@
-// routes/inventoryRoutes.js
 const express = require('express');
 const router = express.Router();
 const inventoryController = require('../controllers/inventoryController');
@@ -9,8 +8,12 @@ router.get('/', inventoryController.getHomePage);
 // Vehicle Detail Page
 router.get('/vehicle/:id', inventoryController.getVehicleDetail);
 
-module.exports = router;
+// Management View
+router.get('/inv', inventoryController.getManagementView);
+
+// Error Testing Route (for testing error handling)
 router.get('/cause-error', (req, res, next) => {
-    next(new Error("This is a test error"))
-  })
-  
+    next(new Error("This is a test error"));
+});
+
+module.exports = router;
