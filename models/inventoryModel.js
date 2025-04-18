@@ -1,5 +1,4 @@
-const db = require('../db');
-
+const db = require('../config/database');
 exports.getAllVehicles = async () => {
   const result = await db.query('SELECT * FROM inventory');
   return result.rows;
