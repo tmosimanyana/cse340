@@ -12,6 +12,13 @@ app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.set("layout", "./layouts/layout");
 
+// Global user setup (for now, we assume there's no authentication system)
+// You can modify this to work with your authentication system (e.g., Passport.js)
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;  // If user is authenticated, this will hold the user object, otherwise null
+  next();
+});
+
 // Routes
 app.use("/", inventoryRoutes);
 
