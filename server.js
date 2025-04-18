@@ -2,6 +2,7 @@
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
+
 /* ***********************
  * Require Statements
  *************************/
@@ -9,28 +10,25 @@ const express = require("express")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const inventoryRoutes = require("./routes/inventoryRoutes") // ✅ Import inventory routes
 const expressLayouts = require("express-ejs-layouts")
-
 
 /* ***********************
  * View Engine and Templates
  *************************/
-
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 
-
 /* ***********************
- * Routes
+ * Static Routes
  *************************/
 app.use(static)
 
-// Index route - loads the homepage and passes a title to the view
-app.get("/", function(req, res) {
-  res.render("index", { title: "Home" })
-})
-
+/* ***********************
+ * Inventory Routes
+ *************************/
+app.use("/", inventoryRoutes) // ✅ Mount inventory routes
 
 /* ***********************
  * Local Server Information
@@ -43,5 +41,5 @@ const host = process.env.HOST
  * Log statement to confirm server operation
  *************************/
 app.listen(port, () => {
-  console.log(`app listening on ${host}:${port}`)
+  console.log(`App listening on ${host}:${port}`)
 })
