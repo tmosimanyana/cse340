@@ -1,15 +1,13 @@
 const express = require('express');
-const router = express.Router();
-const accountController = require('../controllers/accountController');
-const { authenticateJWT } = require('../middleware/authMiddleware');  // Assuming JWT middleware exists
+const app = express();
+const accountRoutes = require('./routes/accountRoute');
+const bodyParser = require('body-parser');
 
-// Route to get account management view
-router.get('/management', authenticateJWT, accountController.getAccountManagement);
+// Middleware setup
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-// Route to handle account update
-router.post('/update', authenticateJWT, accountController.updateAccount);
+// Use account routes
+app.use('/account', accountRoutes);
 
-// Route to handle password change
-router.post('/change-password', authenticateJWT, accountController.changePassword);
-
-module.exports = router;
+// Other route definitions...
