@@ -1,4 +1,5 @@
-const db = require('../config/database');
+const db = require('../config/database'); // Make sure this path is correct
+
 exports.getAllVehicles = async () => {
   const result = await db.query('SELECT * FROM inventory');
   return result.rows;
