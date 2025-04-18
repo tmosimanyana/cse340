@@ -43,3 +43,7 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`App listening on ${host}:${port}`)
 })
+const errorHandler = require('./middleware/errorHandler')
+
+// Error middleware (footer-based link can trigger an error to test this)
+app.use(errorHandler)

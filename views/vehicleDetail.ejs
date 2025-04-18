@@ -1,0 +1,14 @@
+<main>
+    <h1><%= vehicle.make %> <%= vehicle.model %></h1>
+    <div class="vehicle-detail">
+      <img src="<%= vehicle.image %>" alt="Image of <%= vehicle.make %> <%= vehicle.model %>">
+      <ul>
+        <li><strong>Price:</strong> <%= formattedPrice %></li>
+        <li><strong>Mileage:</strong> <%= formattedMileage %></li>
+        <li><strong>Color:</strong> <%= vehicle.color %></li>
+        <li><strong>Year:</strong> <%= vehicle.year %></li>
+        <li><strong>Description:</strong> <%= vehicle.description %></li>
+      </ul>
+    </div>
+  </main>
+  

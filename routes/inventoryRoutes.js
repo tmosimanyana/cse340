@@ -10,3 +10,7 @@ router.get('/', inventoryController.getHomePage);
 router.get('/vehicle/:id', inventoryController.getVehicleDetail);
 
 module.exports = router;
+router.get('/cause-error', (req, res, next) => {
+    next(new Error("This is a test error"))
+  })
+  
