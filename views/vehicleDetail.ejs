@@ -47,6 +47,52 @@
         </div>
       </div>
     </div>
+
+    <!-- Customer Reviews Section -->
+    <section class="vehicle-reviews">
+      <h2>Customer Reviews</h2>
+
+      <% if (reviews.length > 0) { %>
+        <ul class="review-list">
+          <% reviews.forEach(function(review) { %>
+            <li class="review-item">
+              <p><strong><%= review.reviewer_name %></strong> (<%= review.rating %>/5)</p>
+              <p><%= review.review_text %></p>
+              <p class="review-date"><%= new Date(review.created_at).toLocaleDateString() %></p>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No reviews yet. Be the first to leave one!</p>
+      <% } %>
+
+      <h3>Leave a Review</h3>
+
+      <% if (errors && errors.length > 0) { %>
+        <div class="review-errors">
+          <ul>
+            <% errors.forEach(function(error) { %>
+              <li><%= error %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+
+      <form action="/reviews/add" method="POST" class="review-form">
+        <input type="hidden" name="vehicle_id" value="<%= vehicle.inventory_id %>">
+
+        <label for="reviewer_name">Name</label>
+        <input type="text" name="reviewer_name" id="reviewer_name" required value="<%= input.reviewer_name || '' %>">
+
+        <label for="rating">Rating (1–5)</label>
+        <input type="number" name="rating" id="rating" min="1" max="5" required value="<%= input.rating || '' %>">
+
+        <label for="review_text">Review</label>
+        <textarea name="review_text" id="review_text" rows="4" required><%= input.review_text || '' %></textarea>
+
+        <button type="submit" class="primary">Submit Review</button>
+      </form>
+    </section>
   </div>
 </body>
 </html>
