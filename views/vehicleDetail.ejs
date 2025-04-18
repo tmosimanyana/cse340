@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title><%= title %></title>
+  <link rel="stylesheet" href="/css/vehicle-detail.css"/>
 </head>
 <body>
-  <h1><%= vehicle.make %> <%= vehicle.model %></h1>
-  <p>Year: <%= vehicle.year %></p>
-  <p>Price: <%= formattedPrice %></p>
-  <p>Mileage: <%= formattedMileage %></p>
-  <p>Details: <%= vehicle.details %></p>
+  <div class="vehicle-detail-container">
+    <header class="vehicle-header">
+      <h1 class="vehicle-title"><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h1>
+    </header>
+
+    <div class="vehicle-main">
+      <div class="vehicle-images">
+        <div class="vehicle-main-image">
+          <img src="<%= vehicle.image %>" alt="<%= vehicle.make %> <%= vehicle.model %> image"/>
+        </div>
+        <% if (vehicle.thumbnails && vehicle.thumbnails.length > 0) { %>
+          <div class="vehicle-thumbnails">
+            <% vehicle.thumbnails.forEach(function(thumbnail) { %>
+              <img src="<%= thumbnail %>" alt="Thumbnail of <%= vehicle.make %> <%= vehicle.model %>"/>
+            <% }) %>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="vehicle-info">
+        <p class="vehicle-price">No-Haggle Price: <%= formattedPrice %></p>
+        <div class="vehicle-metadata">
+          <p><strong>Mileage:</strong> <%= formattedMileage %></p>
+          <p><strong>Color:</strong> <%= vehicle.color || 'Unknown' %></p>
+          <p><strong>Fuel Type:</strong> <%= vehicle.fuel_type %></p>
+          <p><strong>Drive:</strong> <%= vehicle.drive_type %></p>
+          <p><strong>Transmission:</strong> <%= vehicle.transmission %></p>
+          <p><strong>Stock #:</strong> <%= vehicle.stock_number %></p>
+          <p><strong>VIN:</strong> <%= vehicle.vin %></p>
+        </div>
+        <p><strong>Description:</strong> <%= vehicle.details %></p>
+
+        <div class="vehicle-actions">
+          <button class="primary">Start My Purchase</button>
+          <a href="/contact" class="secondary">Contact Us</a>
+          <a href="/test-drive" class="secondary">Schedule Test Drive</a>
+          <a href="/finance" class="highlight">Apply for Financing</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
