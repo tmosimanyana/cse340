@@ -1,54 +1,35 @@
-const reviewModel = require("../models/reviewsModel");
-const inventoryModel = require("../models/inventoryModel");
+const reviewsModel = require('../models/reviewsModel');
 
-async function showVehicleDetail(req, res) {
-  const vehicleId = req.params.id;
+// Show reviews for a vehicle
+const showReviews = async (req, res, next) => {
   try {
-    const vehicle = await inventoryModel.getVehicleById(vehicleId);
-    const reviews = await reviewModel.getReviewsByVehicleId(vehicleId);
-    res.render("inventory/vehicle-detail", {
-      title: `${vehicle.make} ${vehicle.model}`,
-      vehicle,
-      reviews,
-      errors: null,
-      input: {}
+    const vehicleId = req.params.vehicleId;
+    const reviews = await reviewsModel.getReviewsByVehicleId(vehicleId);
+    res.render('reviews', { reviews, vehicleId });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Add a new review
+const addReview = async (req, res, next) => {
+  const { vehicleId } = req.params;
+  const { reviewerName, rating, reviewText } = req.body;
+
+  // Validate input
+  if (!reviewerName || !rating || rating < 1 || rating > 5) {
+    return res.status(400).render('reviews', {
+      error: 'Invalid input data. Please check the form fields.',
+      vehicleId,
     });
-  } catch (error) {
-    res.status(500).render("error", { message: "Vehicle not found." });
-  }
-}
-
-async function submitReview(req, res) {
-  const { vehicle_id, reviewer_name, rating, review_text } = req.body;
-  const errors = [];
-
-  if (!reviewer_name || !review_text || !rating) {
-    errors.push("All fields are required.");
-  }
-
-  if (rating < 1 || rating > 5) {
-    errors.push("Rating must be between 1 and 5.");
   }
 
   try {
-    const vehicle = await inventoryModel.getVehicleById(vehicle_id);
-    const reviews = await reviewModel.getReviewsByVehicleId(vehicle_id);
-
-    if (errors.length) {
-      return res.render("inventory/vehicle-detail", {
-        title: `${vehicle.make} ${vehicle.model}`,
-        vehicle,
-        reviews,
-        errors,
-        input: { reviewer_name, rating, review_text }
-      });
-    }
-
-    await reviewModel.addReview(vehicle_id, reviewer_name, rating, review_text);
-    res.redirect(`/inventory/detail/${vehicle_id}`);
-  } catch (error) {
-    res.status(500).render("error", { message: "Error submitting review." });
+    const newReview = await reviewsModel.addReview(vehicleId, reviewerName, rating, reviewText);
+    res.redirect(`/reviews/${vehicleId}`);  // Redirect to the vehicle's reviews page
+  } catch (err) {
+    next(err);
   }
-}
+};
 
-module.exports = { showVehicleDetail, submitReview };
+module.exports = { showReviews, addReview };

@@ -1,4 +1,8 @@
-module.exports = (err, req, res, next) => {
-  console.error(err.stack);  // Logs error stack trace for debugging
-  res.status(500).send('Something went wrong!');
+// errorHandler.js
+
+const errorHandler = (err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('error', { error: err.message || 'Something went wrong!' });
 };
+
+module.exports = errorHandler;
