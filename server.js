@@ -36,7 +36,7 @@ app.use(session({
   store: new pgSession({
     conString: process.env.DATABASE_URL
   }),
-  secret: 'yourSecret', // Replace with a strong secret in production
+  secret: process.env.SESSION_SECRET, // Use secret from .env
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false } // Set to true if using HTTPS
