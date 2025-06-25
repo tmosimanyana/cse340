@@ -9,6 +9,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const pgSession = require('connect-pg-simple')(session);
 
 const errorHandler = require("./middleware/errorHandler");
 
@@ -31,18 +32,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Session and Flash setup
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "supersecret",
-    resave: false,
-    saveUninitialized: false, // Changed to false for security
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: true,
-      maxAge: 3600000 // 1 hour
-    }
-  })
-);
+app.use(session({
+  store: new pgSession({
+    conString: process.env.DATABASE_URL
+  }),
+  secret: 'yourSecret', // Replace with a strong secret in production
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Set to true if using HTTPS
+}));
 app.use(flash());
 
 // Set up EJS with layouts
