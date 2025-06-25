@@ -1,3 +1,40 @@
-<%- include('../partials/header') %>
-<h1><%= greeting %></h1>
+// ============================================================================
+// 6. UPDATE: views/account/management.ejs
+// ============================================================================
+`<%- include('../partials/header') %>
+
+<main class="account-management">
+  <% if (user.role !== 'Client') { %>
+    <h1><%= greeting %></h1>
+  <% } else { %>
+    <p class="client-greeting"><%= greeting %></p>
+  <% } %>
+  
+  <% if (message && message.length > 0) { %>
+    <div class="success-message">
+      <%= message %>
+    </div>
+  <% } %>
+  
+  <section class="account-actions">
+    <h2>Account Options</h2>
+    <div class="action-links">
+      <a href="/account/update" class="btn btn-primary">Update Account Information</a>
+      
+      <% if (user.role === 'Admin' || user.role === 'Employee') { %>
+        <a href="/inventory/management" class="btn btn-secondary">Manage Inventory</a>
+      <% } %>
+    </div>
+  </section>
+  
+  <section class="account-info">
+    <h3>Current Account Information</h3>
+    <div class="info-display">
+      <p><strong>Name:</strong> <%= user.first_name %> <%= user.last_name %></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><strong>Account Type:</strong> <%= user.role %></p>
+    </div>
+  </section>
+</main>
+
 <%- include('../partials/footer') %>

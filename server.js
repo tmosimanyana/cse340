@@ -1,3 +1,6 @@
+// ============================================================================
+// 9. UPDATE: server.js (add cookie-parser and validation)
+// ============================================================================
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
@@ -5,6 +8,7 @@ const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const flash = require("connect-flash");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const errorHandler = require("./middleware/errorHandler");
 
@@ -19,6 +23,9 @@ const app = express();
 // Serve static assets (CSS, images, client JS, etc.)
 app.use(express.static(path.join(__dirname, "public")));
 
+// Parse cookies
+app.use(cookieParser());
+
 // Parse incoming requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -28,7 +35,12 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET || "supersecret",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, // Changed to false for security
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 3600000 // 1 hour
+    }
   })
 );
 app.use(flash());
@@ -53,16 +65,15 @@ app.get("/", (req, res) => {
 });
 
 // Modular route groups
-app.use("/inventory", inventoryRoutes); // inventory-related CRUD
-app.use("/reviews", reviewsRoute);      // review submission & display
-app.use("/account", accountRoutes);     // login, logout, management
+app.use("/inventory", inventoryRoutes);
+app.use("/reviews", reviewsRoute);
+app.use("/account", accountRoutes);
 
 // ─── Error Handling ────────────────────────────────────────────────────────────
-app.use(errorHandler); // centralized error handling for unhandled issues
+app.use(errorHandler);
 
 // ─── Server Launch ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
 });
-

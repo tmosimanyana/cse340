@@ -1,11 +1,27 @@
-<header>
-  <nav>
-    <a href="/">Home</a>
-    <% if (!user) { %>
-      <a href="/account/login">Login</a>
-    <% } else { %>
-      <a href="/account/management">Account</a>
-      <a href="/account/logout">Logout</a>
-    <% } %>
+// 7. UPDATE: views/partials/header.ejs
+// ============================================================================
+`<header>
+  <nav class="main-navigation">
+    <div class="nav-brand">
+      <a href="/">CSE 340 App</a>
+    </div>
+    
+    <div class="nav-links">
+      <a href="/">Home</a>
+      
+      <% if (!user) { %>
+        <a href="/account/login">Login</a>
+        <a href="/account/register">Register</a>
+      <% } else { %>
+        <span class="welcome-text">Welcome, <%= user.first_name %>!</span>
+        <a href="/account/management">My Account</a>
+        
+        <% if (user.role === 'Admin' || user.role === 'Employee') { %>
+          <a href="/inventory/management">Inventory</a>
+        <% } %>
+        
+        <a href="/account/logout">Logout</a>
+      <% } %>
+    </div>
   </nav>
-</header>
+</header>`
