@@ -1,28 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <!-- Include external stylesheets here -->
-    <link rel="stylesheet" href="/styles.css">
-    <!-- Include other necessary links (like favicon, Google Fonts, etc.) -->
   </head>
   <body>
-    <div id="wrapper">
-      <!-- Header Section -->
-      <%- include('../partials/header') %>
-
-      <!-- Navigation Section -->
-      <%- include('../partials/navigation') %>
-
-      <!-- Main Content -->
-      <main>
-        <%- body %> <!-- The page-specific content will be injected here -->
-      </main>
-
-      <!-- Footer Section -->
-      <%- include('../partials/footer') %>
-    </div>
+    <%- body %>
   </body>
 </html>

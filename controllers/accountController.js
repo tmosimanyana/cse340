@@ -1,36 +1,37 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');  // Assuming a User model exists
+const jwt = require("jsonwebtoken");
 
-// Display account management view
-exports.getAccountManagement = (req, res) => {
-  if (req.user) {
-    res.render('accountManagement', { user: req.user });
+const buildLogin = (req, res) => {
+  res.render("account/login", { title: "Login" });
+};
+
+const loginAccount = (req, res) => {
+  const { email, password } = req.body;
+
+  if (email === "client@example.com" && password === "password") {
+    const token = jwt.sign({ email, role: "Client" }, process.env.SESSION_SECRET);
+    req.session.user = { email, role: "Client", token };
+    res.redirect("/account/management");
   } else {
-    res.redirect('/account/login');
+    req.flash("errors", "Invalid credentials");
+    res.redirect("/account/login");
   }
 };
 
-// Update account information
-exports.updateAccount = async (req, res) => {
-  const { first_name, last_name, email, account_id } = req.body;
-
-  try {
-    const updatedUser = await User.updateAccount(account_id, first_name, last_name, email);
-    res.redirect('/account/management');
-  } catch (err) {
-    res.render('accountUpdate', { user: req.user, error: 'Error updating account information.' });
-  }
+const logoutAccount = (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
 };
 
-// Change password
-exports.changePassword = async (req, res) => {
-  const { password, account_id } = req.body;
+const buildAccountManagement = (req, res) => {
+  const user = req.session.user;
+  const greeting = user.role === "Admin" ? "Welcome, Admin!" : `Welcome, ${user.email}`;
+  res.render("account/management", { title: "Account Management", greeting });
+};
 
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await User.updatePassword(account_id, hashedPassword);
-    res.redirect('/account/management');
-  } catch (err) {
-    res.render('accountUpdate', { user: req.user, error: 'Error changing password.' });
-  }
+module.exports = {
+  buildLogin,
+  loginAccount,
+  logoutAccount,
+  buildAccountManagement
 };
