@@ -1,6 +1,5 @@
-// 8. UPDATE: package.json (add missing dependencies)
-// ============================================================================
-`{
+
+{
   "name": "cse340-w05",
   "version": "1.0.0",
   "main": "server.js",
@@ -25,4 +24,4 @@
   "devDependencies": {
     "nodemon": "^2.0.22"
   }
-}`
+}
