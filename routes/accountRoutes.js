@@ -1,13 +1,11 @@
 const express = require('express');
-const app = express();
-const accountRoutes = require('./routes/accountRoute');
-const bodyParser = require('body-parser');
+const router = express.Router();
+const accountController = require('../controllers/accountController');
+const auth = require('../middleware/auth');
 
-// Middleware setup
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+router.get('/login', accountController.buildLogin);
+router.post('/login', accountController.loginAccount);
+router.get('/logout', accountController.logoutAccount);
+router.get('/management', auth.checkLogin, accountController.buildAccountManagement);
 
-// Use account routes
-app.use('/account', accountRoutes);
-
-// Other route definitions...
+module.exports = router;
