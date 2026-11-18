@@ -1,87 +1,75 @@
 # CSE340 — Vehicle Inventory Web Application
 
-A Node.js and Express coursework application for browsing a vehicle inventory and managing user accounts. The project uses server-rendered EJS views and PostgreSQL-backed data access.
+A Node.js and Express coursework application using EJS templates and PostgreSQL-backed data access. The repository contains vehicle inventory, account-management, and review-related code.
 
-> **Project status:** Coursework / development project. A local database and environment configuration are required. The repository has not yet been verified as a clean, reproducible deployment.
-
-## Features represented in the code
-
-- Express server with EJS templates and layouts
-- Vehicle inventory listing and vehicle detail controllers
-- PostgreSQL data-access modules
-- Account login and logout flows
-- Password hashing with bcrypt
-- Account detail and password update handlers
-- Request validation with express-validator
-- Session-based access checks and JWT verification middleware
-- Flash messages and centralized error handling
+> **Status:** Development/coursework project. The repository has not yet been run successfully against a configured PostgreSQL database. Treat the listed features as implemented code paths, not as verified production functionality.
 
 ## Technology
 
-- Node.js
-- Express
+- Node.js and Express
 - EJS and express-ejs-layouts
-- PostgreSQL, pg-promise and pg
-- bcrypt
-- express-session and connect-pg-simple
-- jsonwebtoken
-- express-validator
+- PostgreSQL with pg-promise (and the pg package)
+- bcrypt, express-session, connect-pg-simple
+- jsonwebtoken, express-validator, connect-flash
 
-## Requirements
+## Current code areas
 
-- Node.js and npm
-- PostgreSQL database
-- Git
+- Inventory listing and vehicle detail controllers
+- Account login, account updates, and password updates
+- Session-based login checks and JWT-related middleware
+- Vehicle review controller and route (review model is not implemented yet)
+- Shared PostgreSQL connection module at `database/index.js`
+- Centralized error handling
 
 ## Local setup
 
-1. Clone the repository and enter the project directory:
+1. Install a supported Node.js version and PostgreSQL.
+2. Clone the repository:
 
    ```bash
    git clone https://github.com/tmosimanyana/cse340.git
    cd cse340
    ```
 
-2. Install dependencies:
+3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Create a local environment file by copying the example:
+4. Copy the example environment file:
 
    ```bash
    cp .env.example .env
    ```
 
-4. Create a PostgreSQL database and set its connection string in `.env`. The database schema and seed data must match the SQL queries used by the application.
-
-5. Set a long, unique `SESSION_SECRET` value in your local `.env` file. Do not commit `.env` or share its contents.
-
-6. Start the development server:
+5. Set `DATABASE_URL` to a PostgreSQL connection string and set a long, unique `SESSION_SECRET` in `.env`.
+6. Create the database tables and seed data required by the SQL queries. The repository currently does not include a verified schema or seed script.
+7. Start the server:
 
    ```bash
    npm run dev
    ```
 
-The package scripts configure the application to listen on port 5500 by default. If a different port is required, set `PORT` in `.env`.
+The default port is 5500. Set `PORT` in `.env` to override it.
 
 ## Environment variables
 
-See [`.env.example`](.env.example) for the variable names. Replace the placeholders locally; never put real credentials in this repository.
+See [`.env.example`](.env.example). Keep real credentials in your local `.env` file only; do not commit secrets.
 
-## Important maintenance notes
+## Known limitations and work in progress
 
-- The inventory model currently imports `../config/database`, while the account model imports `../database/index`. The former configuration file is empty in the current repository, so the inventory database path needs to be reconciled before the full application can be considered runnable.
-- The project contains both `pg` and `pg-promise` dependencies and appears to use different database APIs in different models. These should be standardized and tested.
-- The session store expects a working PostgreSQL connection.
-- Review cookie settings, session secret handling, authorization checks, and CSRF protections before any production deployment.
-- No automated test suite is currently defined in `package.json`.
+- The inventory model now uses the shared `database/index.js` pg-promise connection rather than the empty `config/database.js` module.
+- Vehicle column names and the shape of vehicle records still need to be reconciled across the model, controller, and EJS templates.
+- The review model is empty. Review submissions and review display are not yet a complete working feature, and the database schema is unknown.
+- Some inventory management links/forms do not currently match the routes registered in `routes/inventoryRoutes.js`.
+- The home template is currently a simple heading rather than a vehicle listing.
+- The header links to account registration, but no registration route is currently defined.
+- The app has not been tested against a real PostgreSQL database. No automated test suite is defined in `package.json`.
+- Review authentication, authorization, session-cookie settings, CSRF protection, and error handling before any production deployment.
 
-## Scope and attribution
+## Project scope
 
-This repository is presented as a learning/coursework project. Features listed above are based on the code structure and should be verified locally before being described as fully working or production-ready.
-
----
+This is a learning/coursework project. Verify functionality locally before presenting individual features as fully working or production-ready.
 
 Repository: https://github.com/tmosimanyana/cse340
