@@ -15,7 +15,7 @@ async function postNewReview(req, res, next) {
   const { vehicleId, reviewerName, rating, reviewText } = req.body
   try {
     await reviewModel.addReview(vehicleId, reviewerName, rating, reviewText)
-    res.redirect(`/inventory/detail/${vehicleId}`) // redirect back to vehicle page
+    res.redirect(`/inventory/vehicle/${vehicleId}`) // redirect back to vehicle page
   } catch (error) {
     next(error)
   }
