@@ -1,33 +1,39 @@
-const db = require('../config/database'); // Make sure this path is correct
+const db = require('../database/index');
 
+// Retrieve all vehicles for the inventory page.
 exports.getAllVehicles = async () => {
-  const result = await db.query('SELECT * FROM inventory');
-  return result.rows;
+  return db.any('SELECT * FROM inventory');
 };
 
+// Retrieve one vehicle. Return null when no matching record exists.
 exports.getVehicleById = async (id) => {
-  const result = await db.query('SELECT * FROM inventory WHERE vehicle_id = $1', [id]);
-  return result.rows[0];
+  return db.oneOrNone('SELECT * FROM inventory WHERE vehicle_id = $1', [id]);
 };
 
+// Create a vehicle classification and return its generated ID.
 exports.addClassification = async (classificationName) => {
-  const result = await db.query(
+  return db.one(
     'INSERT INTO classifications (classification_name) VALUES ($1) RETURNING classification_id',
-    [classificationName]
+    [classificationName],
+    row => row.classification_id
   );
-  return result.rows[0].classification_id;
 };
 
+// Create a vehicle and return its generated ID.
 exports.addVehicle = async (vehicleData) => {
   const { make, model, year, price, mileage, classification_id } = vehicleData;
-  const result = await db.query(
-    'INSERT INTO inventory (make, model, year, price, mileage, classification_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING vehicle_id',
-    [make, model, year, price, mileage, classification_id]
+
+  return db.one(
+    `INSERT INTO inventory
+      (make, model, year, price, mileage, classification_id)
+     VALUES ($1, $2, $3, $4, $5, $6)
+     RETURNING vehicle_id`,
+    [make, model, year, price, mileage, classification_id],
+    row => row.vehicle_id
   );
-  return result.rows[0].vehicle_id;
 };
 
+// Retrieve all available vehicle classifications.
 exports.getClassifications = async () => {
-  const result = await db.query('SELECT * FROM classifications');
-  return result.rows;
+  return db.any('SELECT * FROM classifications');
 };
