@@ -1,47 +1,87 @@
-## Getting Started
+# CSE340 — Vehicle Inventory Web Application
 
-This document is intended to get you started quickly in building a backend driven Node.js application complete with pages and content, backend logic and a PostgreSQL database for data storage.
-## Prerequisites
+A Node.js and Express coursework application for browsing a vehicle inventory and managing user accounts. The project uses server-rendered EJS views and PostgreSQL-backed data access.
 
-The only prerequisite software required to have installed at this point is Git for version control and a code editor - we will use VS Code (VSC).
+> **Project status:** Coursework / development project. A local database and environment configuration are required. The repository has not yet been verified as a clean, reproducible deployment.
 
-## Package Management
+## Features represented in the code
 
-The foundation of the project development software is Node. While functional, Node depends on "packages" to add functionality to accomplish common tasks. This requires a package manager. Three common managers are NPM (Node Package Manager), YARN, and PNPM. While all do the same thing, they do it slightly differently. We will use PNPM for two reasons: 1) All packages are stored on your computer only once and then symlinks (system links) are created from the package to the project as needed, 2) performance is increased meaning that when the project builds, it does so faster.
-You will need to either install or activate PNPM before using it. See https://pnpm.io/
+- Express server with EJS templates and layouts
+- Vehicle inventory listing and vehicle detail controllers
+- PostgreSQL data-access modules
+- Account login and logout flows
+- Password hashing with bcrypt
+- Account detail and password update handlers
+- Request validation with express-validator
+- Session-based access checks and JWT verification middleware
+- Flash messages and centralized error handling
 
-## Install the Project Dependencies
+## Technology
 
-1. Open the downloaded project folder (where this file is located) in VS Code (VSC).
-2. Open the VSC terminal: Terminal > New Window.
-3. Run the following command in the terminal:
+- Node.js
+- Express
+- EJS and express-ejs-layouts
+- PostgreSQL, pg-promise and pg
+- bcrypt
+- express-session and connect-pg-simple
+- jsonwebtoken
+- express-validator
 
-    pnpm install
+## Requirements
 
-4. The first time it may take a few minutes, depending on the speed of your computer and the speed of your Internet connection. This command will instruct PNPM to read the package.json file and download and install the dependencies (packages) needed for the project. It will build a "node_modules" folder storing each dependency and its dependencies. It should also create a pnpm-lock.yaml file. This file should NEVER be altered by you. It is an internal file (think of it as an inventory) that PNPM uses to keep track of everything in the project.
+- Node.js and npm
+- PostgreSQL database
+- Git
 
-## Start the Express Server
+## Local setup
 
-With the packages installed you're ready to run the initial test.
-1. If the VSC terminal is still open use it. If it is closed, open it again using the same command as before.
-2. Type the following command, then press Enter:
+1. Clone the repository and enter the project directory:
 
-    pnpm run dev
+   ```bash
+   git clone https://github.com/tmosimanyana/cse340.git
+   cd cse340
+   ```
 
-3. If the command works, you should see the message "app listening on localhost:5500" in the console.
-4. Open the package.json file.
-5. Note the "Scripts" area? There is a line with the name of "dev", which tells the nodemon package to run the server.js file.
-6. This is the command you just ran.
-7. Open the server.js file.
-8. Near the bottom you'll see two variables "Port" and "Host". The values for the variables are stored in the .env file.
-9. These variables are used when the server starts on your local machine.
+2. Install dependencies:
 
-## Move the demo file
+   ```bash
+   npm install
+   ```
 
-When you installed Git and cloned the remote repository in week 1, you should have created a simple web page.
-1. Find and move that simple web page to the public folder. Be sure to note its name.
-## Test in a browser
+3. Create a local environment file by copying the example:
 
-1. Go to http://localhost:5500 in a browser tab. Nothing should be visible as the server has not been setup to repond to that route.
-2. Add "/filename.html" to the end of the URL (replacing filename with the name of the file you moved to the public folder).
-3. You should see that page in the browser.
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Create a PostgreSQL database and set its connection string in `.env`. The database schema and seed data must match the SQL queries used by the application.
+
+5. Set a long, unique `SESSION_SECRET` value in your local `.env` file. Do not commit `.env` or share its contents.
+
+6. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+The package scripts configure the application to listen on port 5500 by default. If a different port is required, set `PORT` in `.env`.
+
+## Environment variables
+
+See [`.env.example`](.env.example) for the variable names. Replace the placeholders locally; never put real credentials in this repository.
+
+## Important maintenance notes
+
+- The inventory model currently imports `../config/database`, while the account model imports `../database/index`. The former configuration file is empty in the current repository, so the inventory database path needs to be reconciled before the full application can be considered runnable.
+- The project contains both `pg` and `pg-promise` dependencies and appears to use different database APIs in different models. These should be standardized and tested.
+- The session store expects a working PostgreSQL connection.
+- Review cookie settings, session secret handling, authorization checks, and CSRF protections before any production deployment.
+- No automated test suite is currently defined in `package.json`.
+
+## Scope and attribution
+
+This repository is presented as a learning/coursework project. Features listed above are based on the code structure and should be verified locally before being described as fully working or production-ready.
+
+---
+
+Repository: https://github.com/tmosimanyana/cse340
