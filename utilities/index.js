@@ -1,20 +1,26 @@
-function buildVehicleDetailHtml(vehicle) {
-    const formattedPrice = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(vehicle.inv_price);
-    const formattedMiles = new Intl.NumberFormat("en-US").format(vehicle.inv_miles);
-  
-    return `
-      <div class="vehicle-detail">
-        <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
-        <h2>${vehicle.inv_make} ${vehicle.inv_model} Details</h2>
-        <ul>
-          <li><strong>Price:</strong> ${formattedPrice}</li>
-          <li><strong>Mileage:</strong> ${formattedMiles} miles</li>
-          <li><strong>Description:</strong> ${vehicle.inv_description}</li>
-          <li><strong>Color:</strong> ${vehicle.inv_color}</li>
-        </ul>
-      </div>`;
+// Format values used by the server-rendered vehicle detail page.
+function formatPrice(price) {
+  const amount = Number(price);
+  if (!Number.isFinite(amount)) {
+    return 'Price unavailable';
   }
-  
+
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(amount);
+}
+
+function formatMileage(mileage) {
+  const value = Number(mileage);
+  if (!Number.isFinite(value)) {
+    return 'Mileage unavailable';
+  }
+
+  return new Intl.NumberFormat('en-US').format(value) + ' miles';
+}
+
+module.exports = {
+  formatPrice,
+  formatMileage
+};
